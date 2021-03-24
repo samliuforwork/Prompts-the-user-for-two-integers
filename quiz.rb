@@ -18,6 +18,9 @@
 #   so the sequence of arrows again, but nicely displayed.
 # - you may use the unicode array for output: ['↑', '↗', '→', '↘', '↓', '↙', '←', '↖']
 
+  "在印出path的解題上花費比較久時間，解題過程是先找出各點的相對位置，之後依據initial_direction是1或3做判斷、計算得出絕對位置。"
+  "有了絕對位置之後，得知每一row的箭頭前面應該有幾個空白，於是在字串前添加空白，並且跑迴圈完成"
+
 begin
     print('Enter an integer between 1 and 4 and a positive integer: ')
     initial_direction, directions = gets.split()
@@ -74,12 +77,12 @@ begin
     # print出path
     nl = num_base3_arrary.length
     if initial_direction == 1
-      p abs_position = position.map{|n| n - position.min }
+      abs_position = position.map{|n| n - position.min }
       for i in(1..nl) do
         puts num_to_arrow[-i].prepend(" " * (abs_position[-i]))
       end
     elsif initial_direction == 3
-      p abs_position = position.map{|n| (n - position.max).abs }
+      abs_position = position.map{|n| (n - position.max).abs }
       num_to_arrow_down = num_to_arrow.tr('↙↘', '↘↙')
       for i in(1..nl) do
         puts num_to_arrow_down[i-1].prepend(" " * (abs_position[i-1]))
