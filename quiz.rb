@@ -34,24 +34,29 @@ begin
 
     unicode_array = { 1=> "↑", 2=> "→", 3=> "↓", 4=> "←"}
     num_base3 = directions.to_s(base=3)
-    num_base3_arrary = num_base3.to_i.digits.reverse
-    compare_times = num_base3_arrary.length - 1
-    position = (1..compare_times).to_a.fill(0)
-    
-    
-    # for i in 0..compare_times do
-    #   p num_base3_arrary[i]
-    #   if num_base3_arrary[i] < num_base3_arrary[i+1]
-    #     position[i+1] == +1
-    #   elsif num_base3_arrary[i] = num_base3_arrary[i+1]
-    #     position[i] == 0
-    #   else num_base3_arrary[i] > num_base3_arrary[i+1]
-    #   end
-    # end
+    p num_base3_arrary = directions.to_s(base=3).to_i.digits.reverse
 
+    # 解path
+    position_count = []
+    position = [0]
+    for i in (1..num_base3_arrary.length) do
+      if num_base3_arrary[i-1] == 2
+        position_count[i-1] = 1
+      elsif num_base3_arrary[i-1] == 1
+        position_count[i-1] = -1
+      else
+        position_count[i-1] = 0
+      end
+    end
+    p position_count
+    p position_count.length
+    p position_count.length == num_base3.length
+    for i in (1..position_count.length) do
+      position << position_count.take(i).sum
+    end
+    p position.length
+    p position
 
-
-# 如果initial_direction 箭頭往上↑，從下方出發
     if initial_direction == 1
       num_to_arrow = directions.to_s(base=3).tr('012', '↑↖↗')
     elsif initial_direction == 2
