@@ -34,7 +34,24 @@ begin
 
     unicode_array = { 1=> "↑", 2=> "→", 3=> "↓", 4=> "←"}
     num_base3 = directions.to_s(base=3)
+    num_base3_arrary = num_base3.to_i.digits.reverse
+    compare_times = num_base3_arrary.length - 1
+    position = (1..compare_times).to_a.fill(0)
+    
+    
+    # for i in 0..compare_times do
+    #   p num_base3_arrary[i]
+    #   if num_base3_arrary[i] < num_base3_arrary[i+1]
+    #     position[i+1] == +1
+    #   elsif num_base3_arrary[i] = num_base3_arrary[i+1]
+    #     position[i] == 0
+    #   else num_base3_arrary[i] > num_base3_arrary[i+1]
+    #   end
+    # end
 
+
+
+# 如果initial_direction 箭頭往上↑，從下方出發
     if initial_direction == 1
       num_to_arrow = directions.to_s(base=3).tr('012', '↑↖↗')
     elsif initial_direction == 2
@@ -45,9 +62,12 @@ begin
       num_to_arrow = directions.to_s(base=3).tr('012', '←↙↖')
     end
 
-    print("Ok, you want to first look this way:#{unicode_array[initial_direction]}")
-    print("In base 3, the second input reads as: #{num_base3}")
-    print("So that's how you want to go: #{num_to_arrow}")
+    print("Ok, you want to first look this way:#{unicode_array[initial_direction]} \nIn base 3, the second input reads as: #{num_base3}\nSo that's how you want to go: #{num_to_arrow}\n")
+    if initial_direction.even?
+      print("I don't want to have the sun in my eyes, but by all means have a go at it!\n")
+    else
+      print("Let's go then!\n")
+    end
 
 rescue ArgumentError => e
     print("Incorrect input, giving up.\n")
