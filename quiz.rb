@@ -34,11 +34,11 @@ begin
 
     unicode_array = { 1=> "↑", 2=> "→", 3=> "↓", 4=> "←"}
     num_base3 = directions.to_s(base=3)
-    p num_base3_arrary = directions.to_s(base=3).to_i.digits.reverse
+    num_base3_arrary = directions.to_s(base=3).to_i.digits.reverse
 
-    # 解path
+    # 解path，算出每個箭頭所在的絕對位置
     position_count = []
-    position = [0]
+    position = []
     for i in (1..num_base3_arrary.length) do
       if num_base3_arrary[i-1] == 2
         position_count[i-1] = 1
@@ -47,15 +47,12 @@ begin
       else
         position_count[i-1] = 0
       end
+      position_count[0] = 0
     end
-    p position_count
-    p position_count.length
-    p position_count.length == num_base3.length
+    
     for i in (1..position_count.length) do
       position << position_count.take(i).sum
     end
-    p position.length
-    p position
 
     if initial_direction == 1
       num_to_arrow = directions.to_s(base=3).tr('012', '↑↖↗')
@@ -72,6 +69,21 @@ begin
       print("I don't want to have the sun in my eyes, but by all means have a go at it!\n")
     else
       print("Let's go then!\n")
+    end
+
+    # print出path
+    nl = num_base3_arrary.length
+    if initial_direction == 1
+      p abs_position = position.map{|n| n - position.min }
+      for i in(1..nl) do
+        puts num_to_arrow[-i].prepend(" " * (abs_position[-i]))
+      end
+    elsif initial_direction == 3
+      p abs_position = position.map{|n| (n - position.max).abs }
+      num_to_arrow_down = num_to_arrow.tr('↙↘', '↘↙')
+      for i in(1..nl) do
+        puts num_to_arrow_down[i-1].prepend(" " * (abs_position[i-1]))
+      end
     end
 
 rescue ArgumentError => e
