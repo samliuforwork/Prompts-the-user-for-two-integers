@@ -34,8 +34,20 @@ begin
 
     unicode_array = { 1=> "↑", 2=> "→", 3=> "↓", 4=> "←"}
     num_base3 = directions.to_s(base=3)
+
+    if initial_direction == 1
+      num_to_arrow = directions.to_s(base=3).tr('012', '↑↖↗')
+    elsif initial_direction == 2
+      num_to_arrow = directions.to_s(base=3).tr('012', '→↗↘')
+    elsif initial_direction == 3
+      num_to_arrow = directions.to_s(base=3).tr('012', '↓↙↘')
+    elsif initial_direction == 4
+      num_to_arrow = directions.to_s(base=3).tr('012', '←↙↖')
+    end
+
     print("Ok, you want to first look this way:#{unicode_array[initial_direction]}")
     print("In base 3, the second input reads as: #{num_base3}")
+    print("So that's how you want to go: #{num_to_arrow}")
 
 rescue ArgumentError => e
     print("Incorrect input, giving up.\n")
